@@ -1,0 +1,13 @@
+---
+name: root-env
+packages: []
+templates:
+  bin/monit_debugger: bin/monit_debugger
+  bin/root_env_ctl: bin/root_env_ctl
+  config/root_env.conf.erb: config/root_env.conf
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+properties:
+  root_env.leader_address:
+    description: Hostname/IP to the leader/master of the cluster

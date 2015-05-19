@@ -1,5 +1,6 @@
 meta:
   environment: ~
+  root_env: (( merge ))
 
 update:
   canaries: 1
@@ -21,7 +22,7 @@ jobs:
       canaries: 10
     properties:
       root_env:
-        env_tarball: (( merge ))
+        env_tarball: (( meta.root_env.env_tarball ))
 
 networks: (( merge ))
 

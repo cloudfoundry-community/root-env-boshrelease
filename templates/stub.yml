@@ -6,6 +6,8 @@ meta:
     - root_env
   stemcell:
     name: STEMCELL
+  root_env:
+    env_tarball: TARBALL
 
 director_uuid: PLACEHOLDER-DIRECTOR-UUID
 

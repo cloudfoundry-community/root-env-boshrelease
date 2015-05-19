@@ -2,6 +2,7 @@
 
 set -e
 
+
 template_prefix="root-env"
 STEMCELL_OS=${STEMCELL_OS:-ubuntu}
 
@@ -20,6 +21,9 @@ DIRECTOR_UUID=$(echo "$BOSH_STATUS" | grep UUID | awk '{print $2}')
 DIRECTOR_CPI=$(echo "$BOSH_STATUS" | grep CPI | awk '{print $2}')
 DIRECTOR_NAME=$(echo "$BOSH_STATUS" | grep Name | awk '{print $2}')
 NAME=$template_prefix-$infrastructure
+
+echo -n "What URL should this release retrieve your root environment from? "
+read TARBALL
 
 if [[ $DIRECTOR_NAME = "warden" ]]; then
   if [[ $infrastructure != "warden" ]]; then
@@ -58,6 +62,7 @@ echo $DIRECTOR_NAME $DIRECTOR_CPI $DIRECTOR_UUID $STEMCELL
 perl -pi -e "s/PLACEHOLDER-DIRECTOR-UUID/$DIRECTOR_UUID/g" $tmpdir/stub-with-uuid.yml
 perl -pi -e "s/NAME/$NAME/g" $tmpdir/stub-with-uuid.yml
 perl -pi -e "s/STEMCELL/$STEMCELL/g" $tmpdir/stub-with-uuid.yml
+perl -pi -e "s|TARBALL|$TARBALL|g" $tmpdir/stub-with-uuid.yml
 
 spiff merge \
   $templates/deployment.yml \

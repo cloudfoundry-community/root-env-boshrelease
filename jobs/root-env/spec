@@ -1,6 +1,13 @@
 ---
 name: root-env
-packages:
-- env
-templates: {}
-properties: {}
+packages: []
+templates:
+  bin/env_daemon:         bin/env_daemon
+  bin/monit_debugger:     bin/monit_debugger
+  bin/root-env_ctl.erb:   bin/root-env_ctl
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh:   helpers/ctl_setup.sh
+  helpers/ctl_utils.sh:   helpers/ctl_utils.sh
+properties:
+  root_env.env_tarball:
+    description: "URL for the tarball of the root user's environment to install"

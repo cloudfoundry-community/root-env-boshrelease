@@ -1,5 +1,6 @@
-check process root_env
-  with pidfile /var/vcap/sys/run/root_env/root_env.pid
-  start program "/var/vcap/jobs/root_env/bin/monit_debugger root_env_ctl '/var/vcap/jobs/root_env/bin/root_env_ctl start'"
-  stop program "/var/vcap/jobs/root_env/bin/monit_debugger root_env_ctl '/var/vcap/jobs/root_env/bin/root_env_ctl stop'"
+check process root-env
+  with pidfile /var/vcap/sys/run/root-env/root-env.pid
+  start program "/var/vcap/jobs/root-env/bin/monit_debugger root-env_ctl '/var/vcap/jobs/root-env/bin/root-env_ctl start'"
+  stop program "/var/vcap/jobs/root-env/bin/monit_debugger root-env_ctl '/var/vcap/jobs/root-env/bin/root-env_ctl stop'"
   group vcap
+

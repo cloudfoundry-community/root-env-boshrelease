@@ -9,20 +9,11 @@ update:
   serial: false
 
 jobs:
-  - name: root_env_leader_z1
-    templates:
-    - name: root-env
-      release: root-env
-    instances: 0
-    resource_pool: small_z1
-    networks: (( merge ))
-    persistent_disk: 0
-    properties: {}
   - name: root_env_z1
     templates:
     - name: root-env
       release: root-env
-    instances: 0
+    instances: 1
     resource_pool: small_z1
     networks: (( merge ))
     persistent_disk: 0
@@ -30,7 +21,7 @@ jobs:
       canaries: 10
     properties:
       root_env:
-        leader_address: (( merge ))
+        env_tarball: (( merge ))
 
 networks: (( merge ))
 

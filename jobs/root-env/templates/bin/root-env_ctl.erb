@@ -1,0 +1,49 @@
+#!/bin/bash
+
+ENV_DAEMON=/var/vcap/jobs/root-env/bin/env_daemon
+source /var/vcap/jobs/root-env/helpers/ctl_setup.sh 'root-env'
+
+case $1 in
+	start)
+		pid_guard $PIDFILE $JOB_NAME
+		echo $$ > $PIDFILE
+
+		TMP_DIR=/var/vcap/sys/tmp/root-env/env.$$
+		mkdir -p $TMP_DIR
+		curl -L <%= p("root_env.env_tarball") %> | tar -xz -C $TMP_DIR
+		for name in $(ls $TMP_DIR); do
+			if [[ -d $TMP_DIR/$name ]]; then
+				ENV_DIR=$name
+				break
+			fi
+		done
+
+		NEWROOT=$TMP_DIR/$ENV_DIR
+
+		if [[ -d /root ]]; then
+			mv /root /root.bak
+			ln -s $NEWROOT /root
+		else
+			rm /root
+			ln -s $NEWROOT /root
+		fi
+
+		exec chpst -u vcap:vcap $ENV_DAEMON >>$LOG_DIR/$JOB_NAME.stdout.log 2>>$LOG_DIR/$JOB_NAME.stderr.log
+		;;
+
+	stop)
+		PID=$(cat $PIDFILE)
+		kill_and_wait $PIDFILE
+		if [[ -d /root.bak && -L /root ]]; then
+			rm /root
+			mv /root.bak /root
+		fi
+		rm -rf /var/vcap/sys/tmp/root-env/env.$PID
+		;;
+
+	*)
+		echo "Usage: root-env_ctl {start|stop}"
+		;;
+
+esac
+exit 0

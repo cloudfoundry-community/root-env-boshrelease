@@ -15,11 +15,14 @@ bosh target BOSH_HOST
 git clone https://github.com/cloudfoundry-community/root-env-boshrelease.git
 cd root-env-boshrelease
 bosh upload release releases/root-env-1.yml
+```
 
 Or, alterntively, grab the latest final release from S3:
 
-https://root-env-boshrelease.s3.amazonaws.com/boshrelease-root-env-1.tgz
 ```
+bosh upload release https://root-env-boshrelease.s3.amazonaws.com/boshrelease-root-env-1.tgz
+```
+
 
 For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster:
 
